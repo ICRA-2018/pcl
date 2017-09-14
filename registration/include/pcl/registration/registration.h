@@ -289,6 +289,10 @@ namespace pcl
       inline int 
       getMaximumIterations () { return (max_iterations_); }
 
+      /** \brief Get the number of iterations the internal optimization ran for. */
+      inline int 
+      getNrIterations () { return (nr_iterations_); }
+
       /** \brief Set the number of iterations RANSAC should run for.
         * \param[in] ransac_iterations is the number of iterations RANSAC should run for
         */
