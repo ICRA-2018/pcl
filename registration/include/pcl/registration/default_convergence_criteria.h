@@ -210,8 +210,6 @@ namespace pcl
           convergence_state_ = c;
         }
 
-      protected:
-
         /** \brief Calculate the mean squared error (MSE) of the distance for a given set of correspondences.
           * \param[in] correspondences the given set of correspondences
           */
@@ -224,6 +222,8 @@ namespace pcl
           mse /= double (correspondences.size ());
           return (mse);
         }
+
+      protected:
 
         /** \brief The number of iterations done by the registration loop so far. */
         const int &iterations_;
