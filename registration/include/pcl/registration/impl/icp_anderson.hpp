@@ -316,4 +316,13 @@ pcl::AndersonIterativeClosestPoint<PointSource, PointTarget, Scalar>::computeTra
   transformCloud (*input_, output, final_transformation_);
 }
 
+template <typename PointSource, typename PointTarget, typename Scalar> void
+pcl::AndersonIterativeClosestPointWithNormals<PointSource, PointTarget, Scalar>::transformCloud(
+  const PointCloudSource &input,
+  PointCloudSource &output,
+  const Matrix4 &transform)
+{
+  pcl::transformPointCloudWithNormals(input, output, transform);
+}
+
 #endif //PCL_REGISTRATION_IMPL_ICP_ANDERSON_HPP_

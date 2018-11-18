@@ -107,6 +107,7 @@ namespace pcl
         , small_step_threshold_(3)
         , error_overflow_threshold_(0.05)
       {
+        reg_name_ = "AndersonIterativeClosestPoint";
       }
       
       /** \brief Rigid transformation computation method  with initial guess.
@@ -161,6 +162,45 @@ namespace pcl
       typename pcl::AndersonIterativeClosestPoint<PointSource, PointTarget>::Vector6
       get_next_u (const Matrix6X u, const Matrix6X g, const Matrix6X f);
 
+  };
+
+  template <typename PointSource, typename PointTarget, typename Scalar = float>
+  class AndersonIterativeClosestPointWithNormals : public AndersonIterativeClosestPoint<PointSource, PointTarget, Scalar>
+  {
+  public:
+    typedef typename AndersonIterativeClosestPoint<PointSource, PointTarget, Scalar>::PointCloudSource PointCloudSource;
+    typedef typename AndersonIterativeClosestPoint<PointSource, PointTarget, Scalar>::PointCloudTarget PointCloudTarget;
+    typedef typename AndersonIterativeClosestPoint<PointSource, PointTarget, Scalar>::Matrix4 Matrix4;
+
+    using AndersonIterativeClosestPoint<PointSource, PointTarget, Scalar>::reg_name_;
+    using AndersonIterativeClosestPoint<PointSource, PointTarget, Scalar>::transformation_estimation_;
+    using AndersonIterativeClosestPoint<PointSource, PointTarget, Scalar>::correspondence_rejectors_;
+
+    typedef boost::shared_ptr<AndersonIterativeClosestPoint<PointSource, PointTarget, Scalar> > Ptr;
+    typedef boost::shared_ptr<const AndersonIterativeClosestPoint<PointSource, PointTarget, Scalar> > ConstPtr;
+
+    /** \brief Empty constructor. */
+    AndersonIterativeClosestPointWithNormals()
+    {
+      reg_name_ = "AndersonIterativeClosestPointWithNormals";
+      transformation_estimation_.reset(new pcl::registration::TransformationEstimationPointToPlaneLLS<PointSource, PointTarget, Scalar>());
+    };
+
+    /** \brief Empty destructor */
+    virtual ~AndersonIterativeClosestPointWithNormals() {}
+
+  protected:
+
+    /** \brief Apply a rigid transform to a given dataset
+      * \param[in] input the input point cloud
+      * \param[out] output the resultant output point cloud
+      * \param[in] transform a 4x4 rigid transformation
+      * \note Can be used with cloud_in equal to cloud_out
+      */
+    virtual void
+      transformCloud(const PointCloudSource &input,
+        PointCloudSource &output,
+        const Matrix4 &transform);
   };
 }
 
