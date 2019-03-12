@@ -1,0 +1,17 @@
+name: pcl-anderson
+
+base:
+  ubuntu: 16.04
+  cuda: 8.0-devel
+
+apt:
+  - libeigen3-dev
+  - libflann-dev
+  - libusb-1.0-0-dev
+  - libvtk6-qt-dev
+  - libpcap-dev
+  - libboost-all-dev
+  - libproj-dev
+
+build: cmake
+
